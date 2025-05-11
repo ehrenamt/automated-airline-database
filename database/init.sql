@@ -1,4 +1,12 @@
 -- init.sql
+--------------------------------------------------------------------------------
+-- This file should be run after connecting to the porstgreSQL database.
+-- Then the schema should be executed.
+
+-- This is not meant to be a production-grade solution! 
+-- This serves only as a proof-of-concept and demonstration of ability.
+--------------------------------------------------------------------------------
+
 
 CREATE DATABASE flightsdb;
 
@@ -21,12 +29,19 @@ CREATE ROLE readonly_user WITH LOGIN PASSWORD 'strongpassword';
 -- Unable to view details of all available trips.
 CREATE ROLE readonly_trip_user WITH LOGIN PASSWORD 'strongpassword';
 
+-- A role for safe updates from backend or third-parties.
+-- In principle, we won't need this.
+-- However, including it will allow easy and fasy integration with the backend.
+CREATE ROLE update_user WITH LOGIN PASSWORD 'strongupdatepassword';
+
 
 --------------------------------------------------------------------------------
 -- Data control
 --------------------------------------------------------------------------------
 
 -- admin_user
+GRANT CONNECT ON DATABASE flightsdb TO admin_user;
+
 GRANT ALL PRIVILEGES ON SCHEMA core TO admin_user;
 GRANT ALL PRIVILEGES ON SCHEMA api TO admin_user;
 GRANT ALL PRIVILEGES ON SCHEMA view TO admin_user;
@@ -51,5 +66,21 @@ GRANT SELECT ON ALL TABLES IN SCHEMA view TO readonly_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA api GRANT SELECT ON TABLES TO readonly_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA view GRANT SELECT ON TABLES TO readonly_user;
 
--- To be used later when creating time-based functions
-CREATE EXTENSION IF NOT EXISTS pg_cron;
+-- read-only trip user
+REVOKE ALL ON SCHEMA public FROM readonly_trip_user;
+REVOKE ALL ON DATABASE flightsdb FROM readonly_trip_user;
+
+GRANT CONNECT ON DATABASE flightsdb TO readonly_trip_user;
+
+-- temporary
+GRANT USAGE ON SCHEMA api TO readonly_trip_user;
+GRANT USAGE ON SCHEMA view TO readonly_trip_user;
+
+-- update_user
+REVOKE ALL ON SCHEMA public FROM update_user;
+REVOKE ALL ON DATABASE flightsdb FROM update_user;
+
+GRANT CONNECT ON DATABASE flightsdb TO update_user;
+
+-- Allow this user to update certain core tables
+GRANT USAGE ON SCHEMA core TO readonly_user;

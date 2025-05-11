@@ -1,5 +1,10 @@
 -- schema.sql
+--------------------------------------------------------------------------------
 -- Execute this after init.sql
+
+-- This is not meant to be a production-grade solution! 
+-- This serves only as a proof-of-concept and demonstration of ability.
+--------------------------------------------------------------------------------
 
 
 --------------------------------------------------------------------------------
@@ -81,6 +86,7 @@ CREATE TABLE flight (
     date_from DATE NOT NULL, -- first day of operation
     date_to DATE NOT NULL, -- final day of operation
     date_dows BOOLEAN[7] NOT NUll, -- days of the week that this flight operates on
+    created_at TIMESTAMPTZ DEFAULT NOW(), -- for traceability & debugging
     FOREIGN KEY (origin_icao) REFERENCES airport(icao),
     FOREIGN KEY (destination_icao) REFERENCES airport(icao),
     CHECK ( origin_icao NOT LIKE destination_icao)
@@ -97,6 +103,7 @@ CREATE TABLE trip (
     arrival_time_actual TIMESTAMPTZ, -- actual departure time is indeterministic?
     aircraft INTEGER NOT NULL,
     trip_status trip_status_type NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(), -- for traceability & debugging
     FOREIGN KEY (flight_number) REFERENCES flight(flight_number),
     FOREIGN KEY (aircraft) REFERENCES aircraft(id)
 );
