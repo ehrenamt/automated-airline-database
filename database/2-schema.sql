@@ -7,6 +7,8 @@
 --------------------------------------------------------------------------------
 
 
+\c flightsdb
+
 --------------------------------------------------------------------------------
 -- TYPES
 --------------------------------------------------------------------------------
@@ -15,7 +17,7 @@
 --------------------------------------------------------------------------------
 
 
-CREATE TYPE AS manufacturer_type ENUM (
+CREATE TYPE core.manufacturer_type AS ENUM (
     'AIRBUS',
     'BOEING',
     'BOMBARDIER',
@@ -25,16 +27,31 @@ CREATE TYPE AS manufacturer_type ENUM (
     'MCDONNELL DOUGLAS'
 );
 
-CREATE TYPE AS aircraft_status_type ENUM (
+
+CREATE TYPE core.aircraft_model_type AS ENUM (
+    'A220-100',
+    'A220-300',
+    'A319NEO',
+    'A350-1000',
+    'B787-9',
+    'Dash 8 Q400',
+    'E175',
+    'E195',
+    '208B GRAND CARAVAN'
+);
+
+
+CREATE TYPE core.aircraft_status_type AS ENUM (
     'IN SERVICE',
     'UNDER MAINTENANCE',
     'FREE'
 );
 
-CREATE TYPE AS trip_status_type ENUM (
+CREATE TYPE core.trip_status_type AS ENUM (
     'SCHEDULED',
     'DELAYED',
     'IN FLIGHT',
+    'LANDED',
     'CANCELED'
 );
 
@@ -48,7 +65,7 @@ CREATE TYPE AS trip_status_type ENUM (
 --------------------------------------------------------------------------------
 
 
-CREATE TABLE airport (
+CREATE TABLE core.airports (
     icao CHAR(4) PRIMARY KEY,
     iata CHAR(3) UNIQUE NOT NULL,
     full_airport_name TEXT UNIQUE NOT NULL,
@@ -57,7 +74,8 @@ CREATE TABLE airport (
     timezone TEXT NOT NULL
 );
 
-CREATE TABLE seating_configuration (
+
+CREATE TABLE core.seating_configurations (
     configuration_name TEXT PRIMARY KEY,
     first_class SMALLINT DEFAULT 0,
     business_class SMALLINT DEFAULT 0,
@@ -66,51 +84,65 @@ CREATE TABLE seating_configuration (
 );
 
 
-CREATE TABLE aircraft (
+CREATE TABLE core.aircraft (
     id SERIAL PRIMARY KEY,
     registration TEXT UNIQUE NOT NULL,
-    manufacturer manufacturer_type NOT NULL,
-    model TEXT NOT NULL,
+    manufacturer core.manufacturer_type NOT NULL,
+    model core.aircraft_model_type NOT NULL,
     configuration_name TEXT,
-    FOREIGN KEY (configuration_name) REFERENCES seating_configuration(configuration_name)
+    expected_free TIMESTAMPTZ DEFAULT NOW(),
+    destination_icao_last CHAR(4) NOT NULL,
+    destination_icao_next CHAR(4),
+    status core.aircraft_status_type NOT NULL,
+    FOREIGN KEY (configuration_name) REFERENCES core.seating_configurations(configuration_name),
+    FOREIGN KEY (destination_icao_last) REFERENCES core.airports(icao),
+    FOREIGN KEY (destination_icao_next) REFERENCES core.airports(icao),
+    CHECK (destination_icao_last NOT LIKE destination_icao_next)
 );
 
 
 -- Flight time is not an attribute. It is computable, so it will be computed in a view.
-CREATE TABLE flight (
+CREATE TABLE core.flights (
     flight_number TEXT PRIMARY KEY,
     origin_icao CHAR(4) NOT NULL,
     destination_icao CHAR(4) NOT NULL,
-    departure_time_scheduled TIMESTAMPTZ NOT NULL,
-    arrival_time_scheduled TIMESTAMPTZ NOT NULL,
+    departure_time_scheduled TIME NOT NULL,
+    arrival_time_scheduled TIME NOT NULL,
+    types_allowed core.aircraft_model_type[] NOT NULL,
     date_from DATE NOT NULL, -- first day of operation
     date_to DATE NOT NULL, -- final day of operation
     date_dows BOOLEAN[7] NOT NUll, -- days of the week that this flight operates on
-    created_at TIMESTAMPTZ DEFAULT NOW(), -- for traceability & debugging
-    FOREIGN KEY (origin_icao) REFERENCES airport(icao),
-    FOREIGN KEY (destination_icao) REFERENCES airport(icao),
-    CHECK ( origin_icao NOT LIKE destination_icao)
+    created_at TIMESTAMPTZ DEFAULT NOW(), -- for traceability & debugging later
+    FOREIGN KEY (origin_icao) REFERENCES core.airports(icao),
+    FOREIGN KEY (destination_icao) REFERENCES core.airports(icao),
+    CHECK (origin_icao NOT LIKE destination_icao),
+    CHECK (cardinality(types_allowed) >= 1)
 );
 
 
 -- This table is automatically modified by functions to crerating a moving time window that displays recent, current, and upcoming flights.
--- Scheduled departure and arrival are not attributes here as they can be joined 
-CREATE TABLE trip (
+-- TODO:
+-- Scheduled departure and arrival should not be attributes here as they can be joined?
+-- Or we include them for efficiency, to skip a more expensive join?
+CREATE TABLE core.trips (
     id SERIAL PRIMARY KEY,
     flight_number TEXT NOT NULL,
     trip_date DATE NOT NULL,
+    departure_time_scheduled TIME NOT NULL,
     departure_time_actual TIMESTAMPTZ, -- actual departure time is indeterministic?
+    arrival_time_scheduled TIME NOT NULL,
     arrival_time_actual TIMESTAMPTZ, -- actual departure time is indeterministic?
-    aircraft INTEGER NOT NULL,
-    trip_status trip_status_type NOT NULL,
+    aircraft TEXT NOT NULL,
+    trip_status core.trip_status_type NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(), -- for traceability & debugging
-    FOREIGN KEY (flight_number) REFERENCES flight(flight_number),
-    FOREIGN KEY (aircraft) REFERENCES aircraft(id)
+    FOREIGN KEY (flight_number) REFERENCES core.flights(flight_number),
+    FOREIGN KEY (aircraft) REFERENCES core.aircraft(registration)
 );
 
 
--- This table serves as an archive 
-CREATE TABLE past_trip (LIKE trip INCLUDING ALL) PARTITION BY RANGE (trip_date);
+-- This table serves as an archive
+-- A cron task calling a function should regularly update this table over time.
+CREATE TABLE core.past_trips (LIKE core.trips INCLUDING ALL);
 
 
 --------------------------------------------------------------------------------
@@ -119,15 +151,15 @@ CREATE TABLE past_trip (LIKE trip INCLUDING ALL) PARTITION BY RANGE (trip_date);
 
 
 -- For interfaces that search by flight number (end users)
-CREATE INDEX idx_trip_flight_number ON trip(flight_number);
+CREATE INDEX idx_trip_flight_number ON core.trips(flight_number);
 
 -- For interfaces that search by date (arrival / departure screens)
-CREATE INDEX idx_trip_date ON trip(trip_date);
+CREATE INDEX idx_trip_date ON core.trips(trip_date);
 
-CREATE INDEX idx_aircraft_registration ON aircraft(registration);
+CREATE INDEX idx_aircraft_registration ON core.aircraft(registration);
 
 -- Composite index for flight, date queries
-CREATE INDEX idx_trip_flight_date ON trip(flight_number, trip_date);
+CREATE INDEX idx_trip_flight_date ON core.trips(flight_number, trip_date);
 
 
 --------------------------------------------------------------------------------
@@ -137,8 +169,9 @@ CREATE INDEX idx_trip_flight_date ON trip(flight_number, trip_date);
 -- No need to make triggers here.
 --------------------------------------------------------------------------------
 
-
-CREATE VIEW view_trip_details AS
+-- For viewing recent current, and upcoming trips
+-- i.e. for airport information screens
+CREATE VIEW api_schema.view_trip_details AS
 SELECT
 t.flight_number,
 t.trip_date,
@@ -148,63 +181,6 @@ f.destination_icao,
 destination_airport.full_airport_name AS destination_airport_name,
 f.departure_time_scheduled AS scheduled_departure,
 f.arrival_time_scheduled AS schedul_arrival
-FROM trip t JOIN flight f ON t.flight_number = f.flight_number
-JOIN airport origin_airport ON f.origin_icao = origin_airport.icao
-JOIN airport destination_airport ON f.destination_icao = destination_airport.icao;
-
-
---------------------------------------------------------------------------------
--- Functions
---------------------------------------------------------------------------------
-
-
--- Adds upcoming trips to to the trip table based on dates in flight table.
-CREATE FUNCTION generate_trips_from_schedule()
-RETURNS void AS $$
-BEGIN
-END;
-$$ LANGUAGE plpgsql;
-
--- Move all trips that have ended or have been cancelled more than 24 hours ago into the archive table.
-CREATE FUNCTION archive_completed_trips()
-RETURNS void 
-AS $$
-BEGIN
-    INSERT INTO past_trip
-    SELECT * FROM trip JOIN flight f
-    WHERE
-        departure_time_actual IS NOT NULL
-        AND
-        arrival_time_actual IS NOT NULL
-        AND
-        arrival_time_actual < NOW() - INTERVAl '24 hours'
-        OR
-        trip_status LIKE 'CANCELED'
-        AND 
-        f.scheduled_departure < NOW() - INTERVAl '24 hours';
-
-    DELETE FROM trip
-    WHERE id IN (
-        SELECT id FROM trip
-        WHERE
-        departure_time_actual IS NOT NULL AND
-        arrival_time_actual IS NOT NULL AND
-        arrival_time_actual < NOW() - INTERVAL '24 hours'
-    );
-END;
-$$ LANGUAGE plpgsql;
-
-
---------------------------------------------------------------------------------
--- pg_cron schedules
---------------------------------------------------------------------------------
-
-
-CREATE EXTENSION IF NOT EXISTS pg_cron;
-
--- Hourly call for the function to archive trips
-SELECT cron.schedule(
-    'archive_completed_trips_hourly',
-    '0 * * * *',
-    $$ CALL archive_completed_trips(); $$
-);
+FROM core.trips t JOIN core.flights f ON t.flight_number = f.flight_number
+JOIN core.airports origin_airport ON f.origin_icao = origin_airport.icao
+JOIN core.airports destination_airport ON f.destination_icao = destination_airport.icao;
