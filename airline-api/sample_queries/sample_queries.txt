@@ -1,0 +1,7 @@
+http://127.0.0.1:8000/userapi/flights
+http://127.0.0.1:8000/userapi/flights?flight_number=SAL1002
+http://127.0.0.1:8000/userapi/flights?flight_number=SAL10
+http://127.0.0.1:8000/userapi/flights?origin=cyUL
+http://127.0.0.1:8000/userapi/trips
+http://127.0.0.1:8000/dbadmin/archivedtrips
+http://127.0.0.1:8000/dbadmin/aircraft

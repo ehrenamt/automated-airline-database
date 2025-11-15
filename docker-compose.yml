@@ -22,9 +22,9 @@ services:
             DB_ADMIN_USER_PASSWORD: ${DB_ADMIN_USER_PASSWORD}
             DB_READONLY_USER_NAME: ${DB_READONLY_USER_NAME}
             DB_READONLY_USER_PASSWORD: ${DB_READONLY_USER_PASSWORD}
-#         # note to self: do not define ports here
-#         # as docker compose will alreadt create a default bridge
-#         # the database remains reachable from the containers, unreachable from host / public internet
+        # note to self: do not define ports here
+        # as docker compose will already create a default bridge
+        # the database remains reachable from the containers, unreachable from host / public internet
 
     airline-graphql-api:
         build:
@@ -32,11 +32,14 @@ services:
             dockerfile: Dockerfile.api
         ports:
             - "8000:8000"
+        # build the DB image first
+        depends_on:
+            - airline-postgres-database
 
-    airline-client:
-        build:
-            context: ./airline-client
-            dockerfile: Dockerfile.client
-        ports:
-            - "80:80"
+    # airline-client:
+    #     build:
+    #         context: ./airline-client
+    #         dockerfile: Dockerfile.client
+    #     ports:
+    #         - "80:80"
     

@@ -24,7 +24,15 @@ SELECT cron.schedule(
 
 -- Automatically archive trips
 SELECT cron.schedule(
-  'archive_completed_trips_each_30min',
-  '*/30 * * * *',
+  'archive_completed_trips_each_15min',
+  '*/1 * * * *',
   $$ SELECT core.archive_completed_trips(); $$
+);
+
+
+-- Automatically update aircraft statuses
+SELECT cron.schedule(
+  'update_aicraft_statuses_each_1min',
+  '*/1 * * * *',
+  $$ SELECT core.update_aircraft_statuses(); $$
 );

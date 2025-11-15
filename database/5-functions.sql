@@ -33,17 +33,17 @@ BEGIN
             SELECT 1 FROM core.trips
             WHERE flight_number = flight_record.flight_number
         ) THEN
+            -- assign a free aircraft for this trip
             SELECT * INTO aircraft_record FROM core.aircraft
             WHERE status = 'FREE'
             AND model = ANY(flight_record.types_allowed)
             LIMIT 1;
 
+            -- if there's a free aircraft that can serve the route, we can schedule the trip
             IF FOUND THEN 
                 INSERT INTO core.trips (flight_number, trip_date, departure_time_scheduled, arrival_time_scheduled, aircraft, trip_status)
                 VALUES 
                 (flight_record.flight_number, NOW(), flight_record.departure_time_scheduled, flight_record.arrival_time_scheduled, aircraft_record.registration, 'SCHEDULED');
-
-
 
                 UPDATE core.aircraft 
                 SET status = 'IN SERVICE'
@@ -65,22 +65,42 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Move all trips that have landed or been cancelled into the archive table, after a few hours grace period.
+-- Move all trips that have landed or been cancelled into the archive table, after a grace period.
 CREATE FUNCTION core.archive_completed_trips()
 RETURNS void AS $$
 BEGIN
-    INSERT INTO past_trips
-    SELECT * FROM core.trips t JOIN core.flights f
+    INSERT INTO core.past_trips
+    SELECT * FROM core.trips
     WHERE
-        t.arrival_time_scheduled < (CURRENT_TIME - INTERVAL '3 hours')::TIME
+        (arrival_time_scheduled < (CURRENT_TIME - INTERVAL '2 hours')::TIME
         AND
-        t.status = 'LANDED'
+        trip_status = 'LANDED')
         OR
-        t.status = 'CANCELED';
+        (trip_status = 'CANCELED');
 
     DELETE FROM core.trips
     WHERE id IN (
-        SELECT id FROM past_trips
+        SELECT id FROM core.past_trips
     );
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- automatically set an aircraft status to free after a trip completion and 45 min turnaround
+CREATE OR REPLACE FUNCTION core.update_aircraft_statuses()
+RETURNS void AS $$
+BEGIN
+    UPDATE core.aircraft a
+    SET status = 'FREE'
+    FROM (
+        SELECT DISTINCT ON (t.aircraft)
+            aircraft,
+            arrival_time_scheduled
+        FROM core.trips t
+        WHERE t.arrival_time_scheduled IS NOT NULL
+        ORDER BY t.aircraft, t.arrival_time_scheduled DESC
+    ) latest
+    WHERE a.registration = latest.aircraft
+      AND latest.arrival_time_scheduled < (NOW() - INTERVAL '45 minutes')::TIME;
 END;
 $$ LANGUAGE plpgsql;

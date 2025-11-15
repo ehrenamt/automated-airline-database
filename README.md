@@ -1,4 +1,14 @@
-# Automated Airline Scheduling DB & API
+# Sequel Airlines - Fullstack Web App
+
+<p align="center">
+<!-- Thank you to Kopna @ https://devicon.dev/ for these icons! -->
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" style="height: 52px; padding: 0 7px;"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" style="height: 54px; padding: 0 7px;"/>
+<!-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg" style="height: 55px; padding: 0 7px;"/> -->
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain-wordmark.svg" style="height: 57px; padding: 0 7px;"/>    
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain-wordmark.svg" style="height: 55px; padding: 0 7px;"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain-wordmark.svg" style="height: 55px; padding: 0 13px;"/>
+</p>
 
 > An automated, self-contained, and secure trip scheduling database and API meant to replicate real-world airline databases. 
 
@@ -10,32 +20,8 @@ No business logic or query logic is needed in a backend server. This means that 
 
 # Installation and Setup
 
-This is a work-in-progress and I will update this once completed.
-
-## Database Setup
-
-## API Setup
+Each of the three services are dockerized and are built together with ```docker compose```. They are designed to work on the same host.
 
 # Sample Usage
 
 This is a work-in-progress and I will update this once completed.
-
-## Sample User Queries
-
-## Sample Updates
-
-## Bad Queries
-
-# Database Design
-
-The database design statements are located in the ```init.sql``` (defining user permissions and schemas) and ```schema.sql``` (defining tables, entities, and functions ++). This section will go over the entities, tables, views, and user permissions defined in this database. Then it will briefly go over the functions that automate this database.
-
-## Entities
-
-## Tables
-
-## Views
-
-## User Permissions (Roles)
-
----
