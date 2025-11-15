@@ -1,4 +1,8 @@
+"""
+schemas.py
 
+Defines the strawberry query type and fields to resolve GraphQL queries.
+"""
 # pylint: skip-file
 
 # standard imports

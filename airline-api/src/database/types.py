@@ -42,7 +42,7 @@ class TripType:
 
 @strawberry.type
 class ArchivedTripType:
-    """GraphQL type for the trips from the core.trips table."""
+    """GraphQL type for the trips from the core.past_trips table."""
     flightNumber: str
     # departure time is a TIME in the database table
     departureTimeScheduled: str
@@ -60,13 +60,13 @@ class TripInformationType:
     originAirport: str
     destinationAirport: str
     departureTimeScheduled: str
-    departureTimeScheduled: str
+    arrivalTimeScheduled: str
     status: str
 
 
 @strawberry.type
 class AircraftType:
-    """GraphQL type for the trips from the core.trips table."""
+    """GraphQL type for the aircraft from the core.aircraft table."""
     registration: str
     manufacturer: str
     model: str

@@ -9,7 +9,6 @@ from flask import Flask, request, jsonify
 import strawberry
 
 # project imports
-# import src.database.schemas as schemas
 from src.database import schemas
 
 app = Flask(__name__)
