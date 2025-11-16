@@ -181,7 +181,7 @@ f.destination_icao,
 destination_airport.full_airport_name AS destination_airport_name,
 f.departure_time_scheduled AS scheduled_departure,
 f.arrival_time_scheduled AS scheduled_arrival,
-t.status as status
+t.trip_status as status
 FROM core.trips t JOIN core.flights f ON t.flight_number = f.flight_number
 JOIN core.airports origin_airport ON f.origin_icao = origin_airport.icao
 JOIN core.airports destination_airport ON f.destination_icao = destination_airport.icao;

@@ -5,13 +5,19 @@ Entrypoint for a Flask-GraphQL API application.
 """
 
 # third-party packages
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import strawberry
 
 # project imports
 from src.database import schemas
 
 app = Flask(__name__)
+
+load_dotenv()
+
+CORS(app, resources={r"*": {"origins": "*"}})
 
 schema = strawberry.Schema(query=schemas.Query)
 
@@ -53,7 +59,11 @@ def get_flights_default():
 
     result = schema.execute_sync(query_string)
 
-    return jsonify(result.data), 200
+    response = jsonify(result.data)
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response, 200
 
 
 @app.route("/userapi/trips", methods=["GET"])
@@ -68,7 +78,11 @@ def get_trips():
 
     result = schema.execute_sync(query_string)
 
-    return jsonify(result.data), 200
+    response = jsonify(result.data)
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response, 200
 
 
 @app.route("/dbadmin/archivedtrips", methods=["GET"])
@@ -83,7 +97,11 @@ def get_archived_trips():
 
     result = schema.execute_sync(query_string)
 
-    return jsonify(result.data), 200
+    response = jsonify(result.data)
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response, 200
 
 
 @app.route("/dbadmin/aircraft", methods=["GET"])
@@ -98,7 +116,11 @@ def get_aircraft():
 
     result = schema.execute_sync(query_string)
 
-    return jsonify(result.data), 200
+    response = jsonify(result.data)
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response, 200
 
 
 if __name__ == "__main__":

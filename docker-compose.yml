@@ -36,10 +36,13 @@ services:
         depends_on:
             - airline-postgres-database
 
-    # airline-client:
-    #     build:
-    #         context: ./airline-client
-    #         dockerfile: Dockerfile.client
-    #     ports:
-    #         - "80:80"
+    airline-client:
+        build:
+            context: ./airline-client
+            dockerfile: Dockerfile.client
+        ports:
+            - "5173:5173"
+        depends_on:
+            - airline-graphql-api
+            - airline-postgres-database
     
