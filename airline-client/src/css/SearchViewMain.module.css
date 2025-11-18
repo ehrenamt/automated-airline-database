@@ -1,0 +1,22 @@
+/* SearchView.module.css */
+
+/* 
+Lint  or layout rules:
+
+Styles grouped in the following order
+1. 
+Selectors written in camelCase
+Within each group, selectors are placed in alphabetical order.
+One newline between each selector.
+
+*/
+
+h1 {
+    margin: 15px;
+    font-size: 28px;
+}
+
+.searchViewObject {
+  padding: 0;
+  margin: 0;
+}

@@ -69,6 +69,7 @@ CREATE TABLE core.airports (
     icao CHAR(4) PRIMARY KEY,
     iata CHAR(3) UNIQUE NOT NULL,
     full_airport_name TEXT UNIQUE NOT NULL,
+    airport_display_name TEXT UNIQUE NOT NULL,
     country TEXT NOT NULL,
     city TEXT,
     timezone TEXT NOT NULL
@@ -106,8 +107,8 @@ CREATE TABLE core.flights (
     flight_number TEXT PRIMARY KEY,
     origin_icao CHAR(4) NOT NULL,
     destination_icao CHAR(4) NOT NULL,
-    departure_time_scheduled TIME NOT NULL,
-    arrival_time_scheduled TIME NOT NULL,
+    departure_time_scheduled TIMETZ NOT NULL,
+    arrival_time_scheduled TIMETZ NOT NULL,
     types_allowed core.aircraft_model_type[] NOT NULL,
     date_from DATE NOT NULL, -- first day of operation
     date_to DATE NOT NULL, -- final day of operation
@@ -173,15 +174,18 @@ CREATE INDEX idx_trip_flight_date ON core.trips(flight_number, trip_date);
 -- i.e. for airport information screens
 CREATE VIEW api_schema.view_trip_details AS
 SELECT
-t.flight_number,
-t.trip_date,
+t.flight_number AS flight_number,
+ac.model AS aircraft_model,
+t.trip_date AS trip_date,
 f.origin_icao,
-origin_airport.full_airport_name AS origin_airport_name,
+origin_airport.airport_display_name AS origin_airport_name,
 f.destination_icao,
-destination_airport.full_airport_name AS destination_airport_name,
+destination_airport.airport_display_name AS destination_airport_name,
 f.departure_time_scheduled AS scheduled_departure,
 f.arrival_time_scheduled AS scheduled_arrival,
 t.trip_status as status
 FROM core.trips t JOIN core.flights f ON t.flight_number = f.flight_number
+JOIN core.aircraft ac ON t.aircraft = ac.registration
 JOIN core.airports origin_airport ON f.origin_icao = origin_airport.icao
 JOIN core.airports destination_airport ON f.destination_icao = destination_airport.icao;
+

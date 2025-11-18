@@ -6,8 +6,8 @@ Entrypoint for a Flask-GraphQL API application.
 
 # third-party packages
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS, cross_origin
 import strawberry
 
 # project imports
@@ -17,12 +17,13 @@ app = Flask(__name__)
 
 load_dotenv()
 
-CORS(app, resources={r"*": {"origins": "*"}})
+CORS(app)
 
 schema = strawberry.Schema(query=schemas.Query)
 
 
 @app.route("/userapi/flights", methods=["GET"])
+@cross_origin()
 def get_flights_default():
     """
     Default route for flight search.
@@ -59,7 +60,7 @@ def get_flights_default():
 
     result = schema.execute_sync(query_string)
 
-    response = jsonify(result.data)
+    response = make_response(jsonify(result.data))
 
     response.headers.add('Access-Control-Allow-Origin', '*')
 
@@ -67,6 +68,7 @@ def get_flights_default():
 
 
 @app.route("/userapi/trips", methods=["GET"])
+# @cross_origin()
 def get_trips():
 
     query_string = '{ getTrips '
@@ -78,7 +80,28 @@ def get_trips():
 
     result = schema.execute_sync(query_string)
 
-    response = jsonify(result.data)
+    response = make_response(jsonify(result.data))
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response, 200
+
+
+@app.route("/userapi/tripinformation", methods=["GET"])
+# @cross_origin()
+def get_trip_information():
+
+    query_string = '{ getTripInformation '
+    query_string += '{'
+    query_string += 'flightNumber aircraftModel '
+    query_string += 'originAirport destinationAirport '
+    query_string += 'departureTimeScheduled arrivalTimeScheduled status '
+    query_string += '}'
+    query_string += '}'
+
+    result = schema.execute_sync(query_string)
+
+    response = make_response(jsonify(result.data))
 
     response.headers.add('Access-Control-Allow-Origin', '*')
 
@@ -86,6 +109,7 @@ def get_trips():
 
 
 @app.route("/dbadmin/archivedtrips", methods=["GET"])
+@cross_origin()
 def get_archived_trips():
 
     query_string = '{ getArchivedTrips '
@@ -97,7 +121,7 @@ def get_archived_trips():
 
     result = schema.execute_sync(query_string)
 
-    response = jsonify(result.data)
+    response = make_response(jsonify(result.data))
 
     response.headers.add('Access-Control-Allow-Origin', '*')
 
@@ -105,6 +129,7 @@ def get_archived_trips():
 
 
 @app.route("/dbadmin/aircraft", methods=["GET"])
+@cross_origin()
 def get_aircraft():
 
     query_string = '{ getAircraft '
@@ -116,7 +141,7 @@ def get_aircraft():
 
     result = schema.execute_sync(query_string)
 
-    response = jsonify(result.data)
+    response = make_response(jsonify(result.data))
 
     response.headers.add('Access-Control-Allow-Origin', '*')
 

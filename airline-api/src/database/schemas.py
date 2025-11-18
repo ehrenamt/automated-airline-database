@@ -97,6 +97,32 @@ class Query:
                 aircraft=trip.aircraft,
                 tripStatus=trip.trip_status
                 ) for trip in fetched_trips]
+    
+    
+    @strawberry.field
+    def getTripInformation(self) -> List[TripInformationType]:
+        
+        with Session() as session:
+            query = "SELECT * FROM api_schema.view_trip_details"
+
+            query_statement = text(query)
+
+            params = {}
+
+            result = session.execute(query_statement, params)
+
+            fetched_tripinfos = result.fetchall()
+
+            return [TripInformationType(
+                flightNumber=trip.flight_number,
+                aircraftModel=trip.aircraft_model,
+                # tripDate=trip.trip_date,
+                originAirport=trip.origin_airport_name,
+                destinationAirport=trip.destination_airport_name,
+                departureTimeScheduled=trip.scheduled_departure.strftime("%H:%M:%S"),
+                arrivalTimeScheduled=trip.scheduled_arrival.strftime("%H:%M:%S"),
+                status=trip.status
+                ) for trip in fetched_tripinfos]
 
     @strawberry.field
     def get_archived_trips(self) -> List[ArchivedTripType]:

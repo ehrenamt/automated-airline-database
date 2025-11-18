@@ -11,33 +11,36 @@
 --------------------------------------------------------------------------------
 
 
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'CYYZ',
     'YYZ',
     'Toronto Pearson International Airport',
+    'Toronto Pearson',
     'Canada',
     'Toronto',
     'America/New_York'
 );
 
 
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'CYTZ',
     'YTZ',
     'Billy Bishop Toronto City Airport',
+    'Billy Bishop Toronto',
     'Canada',
     'Toronto',
     'America/New_York'
 );
 
 
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'CYUL',
     'YUL',
     'Montréal–Trudeau International Airport',
+    'Montréal–Trudeau',
     'Canada',
     'Montreal',
     'America/New_York'
@@ -45,11 +48,12 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'CYHZ',
     'YHZ',
     'Halifax Stanfield International Airport',
+    'Halifax Stanfield',
     'Canada',
     'Halifax',
     'America/New_York'
@@ -57,11 +61,12 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'CYOW',
     'YOW',
     'Ottawa Macdonald–Cartier International Airport',
+    'Ottawa Macdonald–Cartier',
     'Canada',
     'Ottawa',
     'America/New_York'
@@ -69,11 +74,25 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
+VALUES (
+    'CYVR',
+    'YVR',
+    'Vancouver International Airport ',
+    'Vancouver International',
+    'Canada',
+    'Vancouver',
+    'America/New_York'
+);
+
+
+-- temp timezone
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'KEWR',
     'EWR',
     'Newark Liberty International Airport',
+    'Newark Liberty',
     'United States',
     'Newark',
     'America/New_York'
@@ -81,11 +100,12 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'EHAM',
     'AMS',
     'Amsterdam Airport Schiphol',
+    'Amsterdam Schipol',
     'Netherlands',
     'Amsterdam',
     'America/New_York'
@@ -93,11 +113,12 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'EDDF',
     'FRA',
     'Frankfurt Airport',
+    'Frankfurt',
     'Germany',
     'Frankfurt',
     'America/New_York'
@@ -105,11 +126,12 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'EKCH',
     'CPH',
     'Copenhagen Airport',
+    'Copenhagen',
     'Denmark',
     'Copenhagen',
     'America/New_York'
@@ -117,13 +139,27 @@ VALUES (
 
 
 -- temp timezone
-INSERT INTO core.airports (icao, iata, full_airport_name, country, city, timezone)
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
 VALUES (
     'LTFJ',
     'SAW',
     'Sabiha Gökçen International Airport',
+    'Sabiha Gökçen',
     'Turkey',
     'Istanbul',
+    'America/New_York'
+);
+
+
+-- temp timezone
+INSERT INTO core.airports (icao, iata, full_airport_name, airport_display_name, country, city, timezone)
+VALUES (
+    'RJAA',
+    'NRT',
+    '成田国際空港 Narita International Airport',
+    '成田国際空港 Narita',
+    'Japan',
+    'Tokyo',
     'America/New_York'
 );
 
@@ -200,6 +236,9 @@ VALUES
 
 --------------------------------------------------------------------------------
 -- Flights
+-- Notes:
+-- This airline is headquartered in the NY time zone, UTC-5.
+-- For this reason, be sure to subtract 5 when 
 --------------------------------------------------------------------------------
 
 
@@ -216,71 +255,85 @@ INSERT INTO core.flights (
     )
 VALUES
 -- Billy Bishop to Montreal-Trudeau
-('SAL1000', 'CYTZ', 'CYUL', '00:00:00', '01:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1002', 'CYTZ', 'CYUL', '02:00:00', '03:45:00', '{"A220-300", "Dash 8 Q400"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1004', 'CYTZ', 'CYUL', '04:00:00', '05:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1008', 'CYTZ', 'CYUL', '06:00:00', '07:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1010', 'CYTZ', 'CYUL', '08:00:00', '09:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1012', 'CYTZ', 'CYUL', '10:00:00', '11:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1014', 'CYTZ', 'CYUL', '12:00:00', '13:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1016', 'CYTZ', 'CYUL', '14:00:00', '15:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1020', 'CYTZ', 'CYUL', '22:00:00', '23:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1000', 'CYTZ', 'CYUL', '00:00:00-05:00', '01:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1002', 'CYTZ', 'CYUL', '02:00:00-05:00', '03:45:00-05:00', '{"A220-300", "Dash 8 Q400"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1004', 'CYTZ', 'CYUL', '04:00:00-05:00', '05:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1008', 'CYTZ', 'CYUL', '06:00:00-05:00', '07:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1010', 'CYTZ', 'CYUL', '08:00:00-05:00', '09:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1012', 'CYTZ', 'CYUL', '10:00:00-05:00', '11:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1014', 'CYTZ', 'CYUL', '12:00:00-05:00', '13:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1016', 'CYTZ', 'CYUL', '14:00:00-05:00', '15:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1018', 'CYTZ', 'CYUL', '16:00:00-05:00', '17:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1020', 'CYTZ', 'CYUL', '18:00:00-05:00', '19:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1022', 'CYTZ', 'CYUL', '20:00:00-05:00', '21:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1024', 'CYTZ', 'CYUL', '22:00:00-05:00', '23:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
 
 -- Montreal-Trudeau to Billy Bishop
-('SAL1001', 'CYUL', 'CYTZ', '03:00:00', '04:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1003', 'CYUL', 'CYTZ', '05:00:00', '06:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1005', 'CYUL', 'CYTZ', '07:00:00', '08:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1007', 'CYUL', 'CYTZ', '09:00:00', '10:45:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1001', 'CYUL', 'CYTZ', '03:00:00-05:00', '04:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1003', 'CYUL', 'CYTZ', '05:00:00-05:00', '06:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1005', 'CYUL', 'CYTZ', '07:00:00-05:00', '08:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1007', 'CYUL', 'CYTZ', '09:00:00-05:00', '10:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1009', 'CYUL', 'CYTZ', '11:00:00-05:00', '12:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1011', 'CYUL', 'CYTZ', '13:00:00-05:00', '14:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1013', 'CYUL', 'CYTZ', '15:00:00-05:00', '16:45:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195", "E175"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
 
 -- Montreal to Halifax
-('SAL1100', 'CYUL', 'CYHZ', '07:00:00', '10:00:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
-('SAL1102', 'CYUL', 'CYHZ', '11:00:00', '14:00:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
-('SAL1104', 'CYUL', 'CYHZ', '15:00:00', '18:00:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
-('SAL1106', 'CYUL', 'CYHZ', '18:00:00', '21:00:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
+('SAL1100', 'CYUL', 'CYHZ', '07:00:00-05:00', '10:00:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
+('SAL1102', 'CYUL', 'CYHZ', '11:00:00-05:00', '14:00:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
+('SAL1104', 'CYUL', 'CYHZ', '15:00:00-05:00', '18:00:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
+('SAL1106', 'CYUL', 'CYHZ', '18:00:00-05:00', '21:00:00-05:00', '{"A220-300", "Dash 8 Q400", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, false, false, true, true, true]),
 
--- Montreal to Newark
-('SAL1200', 'CYUL', 'KEWR', '07:15:00', '10:15:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
-('SAL1202', 'CYUL', 'KEWR', '10:15:00', '13:15:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
-('SAL1204', 'CYUL', 'KEWR', '13:15:00', '16:15:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
-('SAL1206', 'CYUL', 'KEWR', '16:15:00', '19:15:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
-('SAL1208', 'CYUL', 'KEWR', '19:15:00', '22:15:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+-- Montreal to Newark - completed
+('SAL1200', 'CYUL', 'KEWR', '07:15:00-05:00', '10:15:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1202', 'CYUL', 'KEWR', '10:15:00-05:00', '13:15:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1204', 'CYUL', 'KEWR', '13:15:00-05:00', '16:15:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1206', 'CYUL', 'KEWR', '16:15:00-05:00', '19:15:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1208', 'CYUL', 'KEWR', '19:15:00-05:00', '22:15:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
 
--- Newark to Montreal
-('SAL1201', 'KEWR', 'CYUL', '08:05:00', '11:05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
-('SAL1203', 'KEWR', 'CYUL', '11:05:00', '14:05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
-('SAL1205', 'KEWR', 'CYUL', '14:05:00', '17:05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+-- Newark to Montreal - completed
+('SAL1201', 'KEWR', 'CYUL', '08:05:00-05:00', '11:05:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1203', 'KEWR', 'CYUL', '11:05:00-05:00', '14:05:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1205', 'KEWR', 'CYUL', '14:05:00-05:00', '17:05:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1207', 'KEWR', 'CYUL', '17:05:00-05:00', '20:05:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
+('SAL1209', 'KEWR', 'CYUL', '20:05:00-05:00', '23:05:00-05:00', '{"A220-300", "B787-9", "A319NEO", "E195"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, false, false, true, true, true]),
 
 
 -- Other
-('SAL1300', 'CYUL', 'EKCH', '06:00:00', '12:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1301', 'EKCH', 'CYUL', '05:00:00', '11:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1302', 'CYUL', 'EKCH', '10:00:00', '16:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1303', 'EKCH', 'CYUL', '13:00:00', '19:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1304', 'CYUL', 'EKCH', '14:00:00', '20:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1305', 'EKCH', 'CYUL', '17:00:00', '23:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1300', 'CYUL', 'EKCH', '06:00:00-05:00', '12:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1301', 'EKCH', 'CYUL', '05:00:00-05:00', '11:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1302', 'CYUL', 'EKCH', '10:00:00-05:00', '16:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1303', 'EKCH', 'CYUL', '13:00:00-05:00', '19:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1304', 'CYUL', 'EKCH', '14:00:00-05:00', '20:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1305', 'EKCH', 'CYUL', '17:00:00-05:00', '23:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
 
--- Ottawa to Amsterdam
-('SAL1400', 'CYOW', 'EHAM', '04:00:00', '11:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1402', 'CYOW', 'EHAM', '07:00:00', '14:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1404', 'CYOW', 'EHAM', '10:00:00', '17:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+-- Ottawa to Amsterdam - completed
+('SAL1400', 'CYOW', 'EHAM', '04:00:00-05:00', '11:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1402', 'CYOW', 'EHAM', '07:00:00-05:00', '14:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1404', 'CYOW', 'EHAM', '10:00:00-05:00', '17:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
 
--- Amsterdam to Ottawa
-('SAL1401', 'EHAM', 'CYOW', '06:00:00', '13:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1403', 'EHAM', 'CYOW', '09:00:00', '16:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1405', 'EHAM', 'CYOW', '12:00:00', '19:00:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+-- Amsterdam to Ottawa - completed
+('SAL1401', 'EHAM', 'CYOW', '06:00:00-05:00', '13:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1403', 'EHAM', 'CYOW', '09:00:00-05:00', '16:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1405', 'EHAM', 'CYOW', '12:00:00-05:00', '19:00:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
 
--- Amsterdam to Istanbul Sabiha
-('SAL2010', 'EHAM', 'LTFJ', '04:00:00', '08:00:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
-('SAL2012', 'EHAM', 'LTFJ', '18:20:00', '22:20:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
+-- Amsterdam to Istanbul Sabiha - completed
+('SAL2010', 'EHAM', 'LTFJ', '04:00:00-05:00', '08:00:00-05:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
+('SAL2012', 'EHAM', 'LTFJ', '18:20:00-05:00', '22:20:00-05:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
 
--- Istanbul Sabiha to Amsterdam
-('SAL2011', 'LTFJ', 'EHAM', '10:00:00', '14:00:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
-('SAL2013', 'LTFJ', 'EHAM', '19:30:00', '23:30:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
+-- Istanbul Sabiha to Amsterdam - completed
+('SAL2011', 'LTFJ', 'EHAM', '10:00:00-05:00', '14:00:00-05:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
+('SAL2013', 'LTFJ', 'EHAM', '19:30:00-05:00', '23:30:00-05:00', '{"A319NEO", "A220-300", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, false, true, true, true, true, true]),
 
---Frankfurt am Main to Montreal
-('SAL1501', 'EDDF', 'CYUL', '00:55:00', '07:55:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1503', 'EDDF', 'CYUL', '16:05:00', '23:15:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+-- Vancouver to Tokyo
+('SAL3100', 'CYVR', 'RJAA', '02:35:00-05:00', '15:15:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
 
--- Montreal to Frankfurt am Main
-('SAL1500', 'CYUL', 'EDDF', '04:10:00', '11:10:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
-('SAL1502', 'CYUL', 'EDDF', '06:10:00', '13:10:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]);
+-- Tokyo to Vancouver
+('SAL3101', 'CYVR', 'RJAA', '01:20:00-05:00', '14:35:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+
+--Frankfurt am Main to Montreal - completed
+('SAL1501', 'EDDF', 'CYUL', '00:55:00-05:00', '07:55:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1503', 'EDDF', 'CYUL', '16:05:00-05:00', '23:15:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+
+-- Montreal to Frankfurt am Main - completed
+('SAL1500', 'CYUL', 'EDDF', '04:10:00-05:00', '11:10:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]),
+('SAL1502', 'CYUL', 'EDDF', '06:10:00-05:00', '13:10:00-05:00', '{"A350-1000", "B787-9"}'::core.aircraft_model_type[], '2025-06-6'::date, '2030-06-6'::date, ARRAY[true, true, true, true, true, true, true]);

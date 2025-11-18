@@ -1,0 +1,173 @@
+/* styles.TripView.css */
+
+/* 
+Lint  or layout rules:
+
+Styles grouped in the following order
+1. 
+
+Within each group, selectors are placed in alphabetical order.
+One newline between each selector.
+
+*/
+
+.tableHeaderTitle {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    font-size: 1.75rem;
+    font-family: "Workbench", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "BLED" 0,
+      "SCAN" 0;
+    color: rgb(232, 232, 177);
+    text-align: center;
+
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.columnHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border-top: 2px grey solid; */
+    border-bottom: 3px grey solid;
+}
+
+.columnHeaderItemLongObject, .columnHeaderItemStandardObject, .columnHeaderItemNarrowObject {
+    margin: 5px 0px;
+
+    /* font properties */
+    font-size: 1.35rem;
+    font-family: "Doto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings: "ROND" 0;
+    text-align: start;
+
+      font-family: "Workbench", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0;
+
+}
+
+.columnHeaderItemLongObject {
+    min-width: 275px;
+    padding: 2px 25px 2px 0px;
+}
+
+.columnHeaderItemStandardObject {
+    min-width: 155px;
+    padding: 2px 25px 2px 0px;
+}
+
+.columnHeaderItemNarrowObject {
+    min-width: 125px;
+    padding: 2px 25px 2px 0px;
+}
+
+.tableViewObject {
+    margin: 2px auto;
+    min-width: 100%;
+    max-width: 100vw;
+    border: 1px grey solid;
+    border-radius: 7px;
+    padding: 0px 13px 13px 13px;
+    background-color: rgb(255, 178, 62);
+    background-color: rgb(5, 5, 5);
+}
+
+/* .tableHeaderObject {
+
+} */
+
+.tripRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    text-align: start;
+    border-bottom: 1px grey solid;
+
+    /* font properties */
+    font-size: 1.2rem;
+    font-family: "Doto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings: "ROND" 0;
+    white-space: nowrap;
+
+      font-family: "Workbench", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0;
+}
+
+.tripRowNarrowField, .tripRowStandardField, .tripRowLongField  {
+    margin: 9px 0px;
+    padding: 2px 25px 2px 0px;
+}
+
+.tripRowNarrowField {
+    min-width: 125px;
+}
+
+.tripRowStandardField {
+    min-width: 155px;
+}
+
+.tripRowLongField {
+    min-width: 275px;
+}
+
+/* special effects */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-size: 5px 5px;
+  background-image: linear-gradient(
+      to right,
+      rgba(52, 52, 52, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(52, 52, 52, 0.03) 1px, transparent 1px);
+  z-index: 1040;
+  pointer-events: none;
+}
+
+.darkoverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(78, 75, 66, 0.24),
+    transparent 25%,
+    transparent 75%,
+    rgba(78, 75, 66, 0.24)
+  );
+  z-index: 1050; /* this should be above the grid overaly */
+  pointer-events: none; /* Allow clicks to pass through the overlay */
+}

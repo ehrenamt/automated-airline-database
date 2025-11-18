@@ -16,6 +16,11 @@ DECLARE
     flight_record RECORD;
     aircraft_record RECORD;
     current_time TIME := CURRENT_TIME;
+
+    -- for a future update.
+    -- current_time TIMETZ := CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York';
+    -- departure_time TIMETZ;
+    -- arrival_time TIMETZ;
 BEGIN
     day_of_week := EXTRACT(DOW FROM CURRENT_DATE) + 1;
 

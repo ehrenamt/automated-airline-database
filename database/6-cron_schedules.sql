@@ -25,7 +25,7 @@ SELECT cron.schedule(
 -- Automatically archive trips
 SELECT cron.schedule(
   'archive_completed_trips_each_15min',
-  '*/1 * * * *',
+  '*/15 * * * *',
   $$ SELECT core.archive_completed_trips(); $$
 );
 
