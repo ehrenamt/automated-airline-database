@@ -10,6 +10,11 @@ To run the production server without Docker, activate the virtual environment.
 .venv/Scripts/Activate
 ```
 
+Set up the virtual environment by installing the packages spceified in ```requirements.txt```.
+```
+pip install -r requirements.txt
+```
+
 Run the main file with Python.
 ```
 python main.py

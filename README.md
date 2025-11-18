@@ -1,4 +1,4 @@
-# Sequel Airlines - Fullstack Web App
+# Sequel Airlines Web Application
 
 <p align="center">
 <!-- Thank you to Kopna @ https://devicon.dev/ for these icons! -->
@@ -10,7 +10,7 @@
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain-wordmark.svg" style="height: 55px; padding: 0 15px;"/>
 </p>
 
-> An automated, self-contained, and secure trip scheduling database and API meant to replicate real-world airline databases. 
+> A full-stack web application for a fictional airline, comprising of a React frontend, a Flask + GraphQL backend API, and an automated PostgreSQL database. 
 
 # Overview
 
