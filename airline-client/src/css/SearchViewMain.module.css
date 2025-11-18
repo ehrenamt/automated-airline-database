@@ -1,20 +1,29 @@
 /* SearchView.module.css */
 
 /* 
-Lint  or layout rules:
+Lint or layout rules:
 
 Styles grouped in the following order
-1. 
-Selectors written in camelCase
-Within each group, selectors are placed in alphabetical order.
-One newline between each selector.
+  1. Type selectors
+  2. ID selectors
+  3. Class selector
+  4. Media selectors (if applicable)
 
+Selectors must be written in camelCase
+Selectors must be placed in alphabetical order within each group. 
+Exactly one newline between each selector.
 */
+
+/* 1. Type selectors */
 
 h1 {
     margin: 15px;
     font-size: 28px;
 }
+
+/* 2. ID selectors */
+
+/* 3. Class selectors */
 
 .searchViewObject {
   padding: 0;

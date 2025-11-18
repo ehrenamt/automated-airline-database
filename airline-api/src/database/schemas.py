@@ -3,6 +3,7 @@ schemas.py
 
 Defines the strawberry query type and fields to resolve GraphQL queries.
 """
+
 # pylint: skip-file
 
 # standard imports
@@ -27,11 +28,15 @@ Session = sessionmaker(bind=engine)
 class Query:
 
     @strawberry.field
-    def get_flights(
-        self, flight_number: Optional[str] = None,
+    def get_flights(self, flight_number: Optional[str] = None,
         origin_icao: Optional[str] = None,
         destination: Optional[str] = None
         ) -> List[FlightType]:
+        """
+        Selects all flights matching the specified criteria 
+        and returns them as a list of FlightType objects.
+        """
+
 
         with Session() as session:
             query = "SELECT * FROM core.flights"
@@ -105,6 +110,8 @@ class Query:
         with Session() as session:
             query = "SELECT * FROM api_schema.view_trip_details"
 
+            query += " ORDER BY scheduled_departure ASC, RANDOM()"
+
             query_statement = text(query)
 
             params = {}
@@ -123,6 +130,7 @@ class Query:
                 arrivalTimeScheduled=trip.scheduled_arrival.strftime("%H:%M:%S"),
                 status=trip.status
                 ) for trip in fetched_tripinfos]
+
 
     @strawberry.field
     def get_archived_trips(self) -> List[ArchivedTripType]:

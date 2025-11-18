@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import './components/searchview/SearchViewMain'
-// import './components/tripview/TripViewMain'
 import TripViewMain from './components/tripview/TripViewMain'
 import SearchViewMain from './components/searchview/SearchViewMain'
 
@@ -16,9 +14,6 @@ function App() {
         {/* <Route path="/dynamic/:id" element={<DynamicPage />} /> */}
       </Routes>
     </Router>
-    // <>
-    //   <TripViewMain></TripViewMain>
-    // </>
   )
 }
 

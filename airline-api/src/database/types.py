@@ -57,7 +57,6 @@ class TripInformationType:
     """GraphQL type for trip information from the api_schema.view_trip_details view."""
     flightNumber: str
     aircraftModel: str
-    # tripDate: str
     originAirport: str
     destinationAirport: str
     departureTimeScheduled: str

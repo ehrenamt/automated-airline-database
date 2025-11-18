@@ -1,0 +1,53 @@
+/* Hnav.module.css */
+
+/* 
+Lint or layout rules:
+
+Styles grouped in the following order
+  1. Type selectors
+  2. ID selectors
+  3. Class selector
+  4. Media selectors (if applicable)
+
+Selectors must be written in camelCase
+Selectors must be placed in alphabetical order within each group. 
+Exactly one newline between each selector.
+*/
+
+/* 1. Type selectors */
+
+/* 2. ID selectors */
+
+/* 3. Class selectors */
+
+.hnavObject {
+    /* position and size properties */
+    margin: 0;
+    padding: 15px 15px;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* borders */
+    border-bottom: 1px darkblue solid;
+    border-left: 1px darkblue solid;
+    border-right: 1px darkblue solid;
+}
+
+.hnavLiObject {
+    /* position and size properties */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    /* layout properties */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* font properties */
+    font-size: 1.25rem;
+}
+
+.hnavLiItemObject {
+  padding: 0px 10px;
+}

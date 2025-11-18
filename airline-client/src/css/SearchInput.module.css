@@ -1,0 +1,11 @@
+
+
+.searchInputObject {
+    margin: 0px;
+    padding: 0px;
+}
+
+.searchFormWrapper {
+    display: flex;
+    flex-direction: row;
+}

@@ -88,7 +88,6 @@ def get_trips():
 
 
 @app.route("/userapi/tripinformation", methods=["GET"])
-# @cross_origin()
 def get_trip_information():
 
     query_string = '{ getTripInformation '

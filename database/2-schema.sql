@@ -187,5 +187,6 @@ t.trip_status as status
 FROM core.trips t JOIN core.flights f ON t.flight_number = f.flight_number
 JOIN core.aircraft ac ON t.aircraft = ac.registration
 JOIN core.airports origin_airport ON f.origin_icao = origin_airport.icao
-JOIN core.airports destination_airport ON f.destination_icao = destination_airport.icao;
+JOIN core.airports destination_airport ON f.destination_icao = destination_airport.icao
+ORDER BY f.departure_time_scheduled ASC;
 

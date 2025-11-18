@@ -1,37 +1,29 @@
 /* styles.TripView.css */
 
 /* 
-Lint  or layout rules:
+Lint or layout rules:
 
 Styles grouped in the following order
-1. 
+  1. Type selectors
+  2. ID selectors
+  3. Class selector
+  4. Media selectors (if applicable)
 
-Within each group, selectors are placed in alphabetical order.
-One newline between each selector.
-
+Selectors must be written in camelCase
+Selectors must be placed in alphabetical order within each group. 
+Exactly one newline between each selector.
 */
 
-.tableHeaderTitle {
-    margin-top: 15px;
-    margin-bottom: 15px;
-
-    font-size: 1.75rem;
-    font-family: "Workbench", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-      "BLED" 0,
-      "SCAN" 0;
-    color: rgb(232, 232, 177);
-    text-align: center;
-
-}
+/* 1. Type selectors */
 
 ul {
     margin: 0;
     padding: 0;
 }
+
+/* 2. ID selectors */
+
+/* 3. Class selectors */
 
 .columnHeader {
     display: flex;
@@ -39,6 +31,9 @@ ul {
     align-items: center;
     /* border-top: 2px grey solid; */
     border-bottom: 3px grey solid;
+    color: white;
+
+    justify-content: space-between;
 }
 
 .columnHeaderItemLongObject, .columnHeaderItemStandardObject, .columnHeaderItemNarrowObject {
@@ -52,7 +47,9 @@ ul {
     font-style: normal;
     font-variation-settings: "ROND" 0;
     text-align: start;
-
+    color: white;
+    
+    font-size: 1.5rem;
       font-family: "Workbench", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -78,20 +75,38 @@ ul {
     padding: 2px 25px 2px 0px;
 }
 
-.tableViewObject {
-    margin: 2px auto;
-    min-width: 100%;
-    max-width: 100vw;
-    border: 1px grey solid;
-    border-radius: 7px;
-    padding: 0px 13px 13px 13px;
-    background-color: rgb(255, 178, 62);
-    background-color: rgb(5, 5, 5);
+.tableHeaderTitle {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: 0;
+
+    font-size: 2rem;
+    font-family: "Workbench", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "BLED" 0,
+      "SCAN" 0;
+    color: rgb(232, 232, 177);
+    text-align: center;
 }
 
-/* .tableHeaderObject {
+/* Our main table object */
+.tableViewObject {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px 13px 18px 18px;
+    background-color: rgb(255, 178, 62);
+    background-color: rgb(5, 5, 5);
 
-} */
+    scrollbar-width: none;
+}
+
+.tableViewObject::-webkit-scrollbar {
+    display: none;
+}
 
 .tripRow {
     display: flex;
@@ -101,27 +116,24 @@ ul {
     text-align: start;
     border-bottom: 1px grey solid;
 
-    /* font properties */
-    font-size: 1.2rem;
-    font-family: "Doto", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 900;
-    font-style: normal;
-    font-variation-settings: "ROND" 0;
-    white-space: nowrap;
+    justify-content: space-between;
 
-      font-family: "Workbench", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings:
-    "BLED" 0,
-    "SCAN" 0;
+    /* font properties */
+    color: white;
+    font-size: 1.2rem;
+    font-family: "Workbench", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "BLED" 0,
+        "SCAN" 0;
 }
 
 .tripRowNarrowField, .tripRowStandardField, .tripRowLongField  {
-    margin: 9px 0px;
+    margin: 11px 0px;
     padding: 2px 25px 2px 0px;
+    color: white;
 }
 
 .tripRowNarrowField {

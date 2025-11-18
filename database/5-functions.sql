@@ -109,3 +109,25 @@ BEGIN
       AND latest.arrival_time_scheduled < (NOW() - INTERVAL '45 minutes')::TIME;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION core.simulate_random_delay_or_cancel()
+RETURNS void AS $$
+DECLARE
+    selected_trip RECORD;
+BEGIN
+    SELECT *
+    INTO selected_trip
+    FROM core.trips t
+    WHERE t.trip_status = 'SCHEDULED'
+    ORDER BY RANDOM()
+    LIMIT 1;
+
+    UPDATE core.trips 
+    SET trip_status = 'DELAYED'
+    WHERE id = selected_trip.id;
+
+    RAISE NOTICE 'FLIGHT DELAYED! %', selected_trip.flight_number;
+
+END;
+$$ LANGUAGE plpgsql;

@@ -29,6 +29,10 @@ function TripViewMain() {
     };
 
     fetchTrips();
+
+    const intervalId = setInterval(fetchTrips, 5000);
+
+    return () => clearInterval(intervalId);
     }, []);
 
     // Placeholder, we have some other ideas for loading values
@@ -39,12 +43,19 @@ function TripViewMain() {
         switch (status) {
             case 'LANDED':
                 return { color: 'rgb(130, 255, 153)' };
+            case 'CANCELED':
+                return { color: 'rgba(255, 101, 101, 1)' };
+            case 'DELAYED':
+                return { color: 'rgba(255, 101, 101, 1)' };
             default:
                 return { color: 'rgb(255, 178, 62)' };
         }
     };
 
     console.log(trips)
+
+    // document.title = "Trip Information";
+
     return (
         <>  
             <div class={styles.darkoverlay}></div>
