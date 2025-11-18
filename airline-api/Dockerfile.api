@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
-# in-built Flask dev server
+# uncomment to use the in-built Flask dev server
 # CMD ["python3", "main.py"]
 
 # production server

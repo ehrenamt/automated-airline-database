@@ -1,9 +1,7 @@
 FROM postgres:16
 
-# custom config to require authentication for connections from all origins
-# COPY pg_hba.conf /var/lib/postgresql/data/pg_hba.conf
 
-
+# install pg_cron
 RUN apt-get update &&  \ 
     apt-get -y install postgresql-16-cron && \ 
     apt-get clean \ 
@@ -25,10 +23,3 @@ COPY 6-cron_schedules.sql /docker-entrypoint-initdb.d/
 COPY drop.sql /utils/
 
 COPY pg_hba.conf /utils/
-
-
-
-# RUN rm /var/lib/postgresql/data/pg_hba.conf && \
-#     cp /utils/pg_hba.conf /var/lib/postgresql/data
-
-# RUN cp /utils/pg_hba.conf /var/lib/postgresql/data/
