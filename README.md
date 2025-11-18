@@ -3,7 +3,7 @@
 <p align="center">
 <!-- Thank you to Kopna @ https://devicon.dev/ for these icons! -->
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" style="height: 52px; padding: 0 15px;"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" style="height: 52px; padding: 0 15px;/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" style="height: 52px; padding: 0 15px;"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" style="height: 54px; padding: 0 15px;"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain-wordmark.svg" style="height: 57px; padding: 0 15px;"/>    
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-plain-wordmark.svg" style="height: 55px; padding: 0 15px;"/>
