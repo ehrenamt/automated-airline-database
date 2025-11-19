@@ -22,15 +22,29 @@ Exactly one newline between each selector.
 
 .hnavObject {
     /* position and size properties */
-    margin: 0;
-    padding: 15px 15px;
     width: 100%;
     box-sizing: border-box;
+    
 
+}
+
+.hnavWrapper {
+    padding: 0px 12vw;
+}
+
+.hnav {
+    width: 100%;
+    padding: 15px 25px;
+
+    box-sizing: border-box;
     /* borders */
-    border-bottom: 1px darkblue solid;
-    border-left: 1px darkblue solid;
-    border-right: 1px darkblue solid;
+    border-bottom: 1px rgba(24, 24, 24);
+    border-left: 1px rgba(24, 24, 24);
+    border-right: 1px rgba(24, 24, 24);
+    border-radius: 5px;
+
+    background-color: white;
+
 }
 
 .hnavLiObject {

@@ -1,15 +1,38 @@
+import { useState } from 'react';
 import styles from '../../css/SearchViewMain.module.css'
 import Hnav from '../Hnav';
 import SearchInput from './SearchInput'
 
 function SearchViewMain() {
+
+    const [formData, setFormData] = useState({
+        origin: '',
+        destination: '',
+        date: '',
+        passengers: 1
+    });
+
+    const [responseData, setResponseData] = useState(null);
+
+    const handleInputChange = (event) => {
+        const { key, value } = event.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [key]: value,
+        }));
+
+        console.log(formData)
+    };
+
     return (
         <>
-            <div class={styles.searchViewObject}>
+            <div className={styles.searchViewObject}>
                 <Hnav></Hnav>
-                <h2>Flying to Europe or Asia for the holidays?</h2>
-                <h2>With the largest fleet and flight network in the world, Sequel Airlines will take you there!</h2>
-                <SearchInput></SearchInput>
+                <div className={styles.searchViewHeaderGroup}>
+                    <h1>Flying to Europe or Asia for the holidays?</h1>
+                    <h2>With the largest fleet and flight network in the world, Sequel Airlines will take you there!</h2>
+                </div>
+                <SearchInput onInputChange={handleInputChange}></SearchInput>
             </div>
         </>
     )

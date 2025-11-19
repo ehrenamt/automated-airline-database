@@ -58,38 +58,38 @@ function TripViewMain() {
 
     return (
         <>  
-            <div class={styles.darkoverlay}></div>
-            <div class={styles.overlay}></div>
-            <div class={styles.tableViewObject}>
-                <h1 class={styles.tableHeaderTitle}>Live Trip Information - Arrivals and Departures</h1>
-                <div class={styles.columnHeader}>
-                    <p class={styles.columnHeaderItemNarrowObject}>Flight #</p>
-                    <p class={styles.columnHeaderItemLongObject}>From</p>
-                    <p class={styles.columnHeaderItemLongObject}>To</p>
-                    <p class={styles.columnHeaderItemStandardObject}>Aircraft</p>
-                    <p class={styles.columnHeaderItemNarrowObject}>Departure</p>
-                    <p class={styles.columnHeaderItemNarrowObject}>Arrival</p>
-                    <p class={styles.columnHeaderItemNarrowObject}>Status</p>
+            <div className={styles.darkoverlay}></div>
+            <div className={styles.overlay}></div>
+            <div className={styles.tableViewObject}>
+                <h1 className={styles.tableHeaderTitle}>Live Trip Information - Arrivals and Departures</h1>
+                <div className={styles.columnHeader}>
+                    <p className={styles.columnHeaderItemNarrowObject}>Flight #</p>
+                    <p className={styles.columnHeaderItemLongObject}>From</p>
+                    <p className={styles.columnHeaderItemLongObject}>To</p>
+                    <p className={styles.columnHeaderItemStandardObject}>Aircraft</p>
+                    <p className={styles.columnHeaderItemNarrowObject}>Departure</p>
+                    <p className={styles.columnHeaderItemNarrowObject}>Arrival</p>
+                    <p className={styles.columnHeaderItemNarrowObject}>Status</p>
                 </div>
-                <div class={styles.columnHeader}>
-                    <p class={styles.columnHeaderItemNarrowObject}>Vol #</p>
-                    <p class={styles.columnHeaderItemLongObject}>De</p>
-                    <p class={styles.columnHeaderItemLongObject}>à</p>
-                    <p class={styles.columnHeaderItemStandardObject}>Avion</p>
-                    <p class={styles.columnHeaderItemNarrowObject}>Départ</p>
-                    <p class={styles.columnHeaderItemNarrowObject}>Arrivée</p>
-                    <p class={styles.columnHeaderItemNarrowObject}>état</p>
+                <div className={styles.columnHeader}>
+                    <p className={styles.columnHeaderItemNarrowObject}>Vol #</p>
+                    <p className={styles.columnHeaderItemLongObject}>De</p>
+                    <p className={styles.columnHeaderItemLongObject}>à</p>
+                    <p className={styles.columnHeaderItemStandardObject}>Avion</p>
+                    <p className={styles.columnHeaderItemNarrowObject}>Départ</p>
+                    <p className={styles.columnHeaderItemNarrowObject}>Arrivée</p>
+                    <p className={styles.columnHeaderItemNarrowObject}>état</p>
                 </div>
                 <ul>
                 {trips.map(trip => (
-                    <li class={styles.tripRow} key={trip.flightNumber}>
-                        <p class={styles.tripRowNarrowField}>{trip.flightNumber}</p>
-                        <p class={styles.tripRowLongField}>{trip.originAirport}</p>
-                        <p class={styles.tripRowLongField}>{trip.destinationAirport}</p>
-                        <p class={styles.tripRowStandardField} data-aircraft={`Aircraft: ${trip.aircraftModel}, Flight Number: ${trip.flightNumber}`}>{trip.aircraftModel}</p>
-                        <p class={styles.tripRowNarrowField}>{trip.departureTimeScheduled}</p>
-                        <p class={styles.tripRowNarrowField}>{trip.arrivalTimeScheduled}</p>
-                        <p class={styles.tripRowNarrowField} style={getStatusColor(trip.status)}>{trip.status}</p>
+                    <li className={styles.tripRow} key={trip.flightNumber}>
+                        <p className={styles.tripRowNarrowField}>{trip.flightNumber}</p>
+                        <p className={styles.tripRowLongField}>{trip.originAirport}</p>
+                        <p className={styles.tripRowLongField}>{trip.destinationAirport}</p>
+                        <p className={styles.tripRowStandardField} data-aircraft={`Aircraft: ${trip.aircraftModel}, Flight Number: ${trip.flightNumber}`}>{trip.aircraftModel}</p>
+                        <p className={styles.tripRowNarrowField}>{trip.departureTimeScheduled}</p>
+                        <p className={styles.tripRowNarrowField}>{trip.arrivalTimeScheduled}</p>
+                        <p className={styles.tripRowNarrowField} style={getStatusColor(trip.status)}>{trip.status}</p>
                     </li>
                 ))}
                 </ul>

@@ -29,3 +29,7 @@ h1 {
   padding: 0;
   margin: 0;
 }
+
+.searchViewHeaderGroup {
+  padding: 10vh 12vw;
+}
